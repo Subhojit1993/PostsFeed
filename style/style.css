@@ -1,0 +1,93 @@
+.sign-in-div {
+	margin-top: 25%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.sign-in-button {
+	background: #8B0000;
+    /* border: 2px solid lightgrey; */
+    border-radius: 6px;
+    color: white;
+    padding: 5px 20px;
+    font-weight: bold;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.sign-in-button:hover {
+	background: white;
+    /* border: 2px solid lightgrey; */
+    border-radius: 6px;
+    color: #8B0000;
+    padding: 5px 20px;
+    font-weight: bold;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.line {
+    border: 1px solid lightblue;
+}
+
+.brand-image {
+    height: 150px;
+    width: 100%;
+}
+
+.details-brand-image {
+    height: 300px;
+    width: 100%;
+}
+
+.card-class-two {
+    margin-top: 2%;
+}
+
+.button-div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+button.show-more-button {
+    background-color: lightslategray;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 14px;
+}
+
+button.show-more-button:hover {
+    background-color: white;
+    color: lightslategray;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 14px;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.avatar-div {
+    /*width: 100%;*/
+    display: flex;
+    justify-content: center;
+}
+
+.row-cols {
+    padding-top: 2%;
+    padding-bottom: 2%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.label-texts {
+    font-weight: bold;
+}
+
+.details-div {
+    margin-top: 5%;
+}
