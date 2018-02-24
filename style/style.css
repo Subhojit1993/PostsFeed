@@ -91,3 +91,11 @@ button.show-more-button:hover {
 .details-div {
     margin-top: 5%;
 }
+
+.comment-hidden {
+    display: none;
+}
+
+.comment-show {
+    display: block;
+}
