@@ -11,13 +11,6 @@ class Login extends Component {
 		super(props);
 	}
 
-	componentWillMount() {
-		// firebase.auth().languageCode = 'en';
-		firebase.auth().onAuthStateChanged(function(user) {
-		  // console.log(user);
-		});
-	}
-
 	handleClick() {
 		var provider = new firebase.auth.GoogleAuthProvider();;
 		let self = this;

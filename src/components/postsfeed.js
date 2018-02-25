@@ -54,7 +54,6 @@ class PostsFeed extends Component {
 	}
 
 	componentWillMount() {
-
 		var localLikes = localStorage.getItem('likes');
 		this.setState({ localLikes: localLikes });
 
@@ -79,16 +78,6 @@ class PostsFeed extends Component {
 				response: response
 			});
 		});
-
-	}
-
-	componentDidMount() {
-		const self=this;
-	    firebase.auth().onAuthStateChanged(function(user) {
-	      if(user==null) {
-	          window.location = '/';
-	      }
-	    });
 	}
 
 	getPosts() {
@@ -229,7 +218,7 @@ class LikeComments extends Component {
 		};
 		this.getComments = this.getComments.bind(this);
 	}
-	componentWillMount() {
+	componentDidMount() {
 		let likes = [];
 		
 		var localLikes = localStorage.getItem('likes');
