@@ -1,6 +1,6 @@
 # Simple Posts Feed
 
-Authenticate into the feed and watch others posts.
+Authenticate into the feed and watch others posts & like and comment into those.
 
 ### Getting Started
 
