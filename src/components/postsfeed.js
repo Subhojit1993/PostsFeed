@@ -92,11 +92,10 @@ class PostsFeed extends Component {
 	}
 
 	getPosts() {
-		let htmlContent = [];
 		if(this.state.response.data != undefined) {
-			Object.values(this.state.response.data).slice(0, this.state.end_index).forEach(function(element) {
+			return Object.values(this.state.response.data).slice(0, this.state.end_index).map((element) => {
 				let name = element.first_name + ' ' + element.last_name;
-				htmlContent.push(
+				return(
 					<Card key={element.user_name} className="container card-class-two">
 						<Link 
 						to={{ 
@@ -124,25 +123,19 @@ class PostsFeed extends Component {
 							<LikeComments key={element.user_name} image={this.state.image} myname={this.state.myname} id={element.user_name} elements={element} />
 						</div>
 					</Card>
-				)
-			}, this)
+				);
+			});
 		}
-		return htmlContent;
 	}
 
 	countIndex() {
-
-		// let startindex = this.state.end_index;
 		let endindex = this.state.end_index + 10;
-
 		this.setState({
 			end_index: endindex
 		});
-
 		if(endindex == Object.values(this.state.response.data).length) {
 			this.setState({ hide_button: true});
 		}
-
 	}
 
 	onSignOut() {
@@ -298,16 +291,18 @@ class LikeComments extends Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		var comments = [];
-		// console.log(this.state.textvalue);
-		var a = { username: e.currentTarget.id, comment: this.state.textvalue, image: this.props.image, myname: this.props.myname };
-		// console.log(a);
+		var a = { 
+			username: e.currentTarget.id, 
+			comment: this.state.textvalue, 
+			image: this.props.image, 
+			myname: this.props.myname 
+		};
 		var localComments = localStorage.getItem('comments');
 		if(localComments!=null) {
 			comments = JSON.parse(localComments);
 		}
 		comments.push(a);
 		localStorage.setItem('comments', JSON.stringify(comments));
-		// console.log(comments);
 		this.setState({
 			mycomments: comments,
 			textvalue: ''
@@ -316,12 +311,10 @@ class LikeComments extends Component {
 	}
 
 	getComments() {
-		let htmlContent = [];
 		if(this.state.mycomments != []) {
-			this.state.mycomments.forEach(function(element, index) {
-				// console.log(element.comment);
+			return this.state.mycomments.map((element, index) => {
 				if(this.props.id == element.username) {
-					htmlContent.push(
+					return(
 						<div key={index}>
 							<Card>
 								<CardHeader
@@ -332,9 +325,9 @@ class LikeComments extends Component {
 								/>
 							</Card><br/>
 						</div>
-					)
+					);
 				}
-			}, this)
+			});
 		}
 		return htmlContent;
 	}
