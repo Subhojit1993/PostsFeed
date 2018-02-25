@@ -2,10 +2,35 @@ import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 import axios from 'axios';
 import { Link } from 'react-router';
 
-const url = "https://api.myjson.com/bins/f0475";
+const url = "https://api.jsonbin.io/b/5a92b3cba121bc097fe72ca9";
+
+const signOutStyle = {
+	backgroundColor: 'lightseagreen',
+	color: 'white',
+	fontWeight: 'bold',
+	float: 'right',
+	marginTop: '2%'
+};
+
+const signoutMainStyle = {
+    width:'100%',
+    textAlign: 'center',
+    marginLeft:'0%'
+};
+const signoutActionStyle = {
+    background: '#1E2430',
+    color: 'white',
+    textAlign: 'center'
+};
+
+const signoutStyle = {
+    background: '#1E2430',
+    color: 'white'
+};
 
 class PostsFeed extends Component {
 
@@ -19,9 +44,13 @@ class PostsFeed extends Component {
 			hide_button: false,
 			arr: [],
 			hideLike: false,
-			localLikes: []
+			localLikes: [],
+			open_signout: false
 		};
 		this.getPosts = this.getPosts.bind(this);
+		this.onSignOut = this.onSignOut.bind(this);
+		this.onConfirmSignOut = this.onConfirmSignOut.bind(this);
+		this.closeSignOut = this.closeSignOut.bind(this);
 	}
 
 	componentWillMount() {
@@ -51,6 +80,15 @@ class PostsFeed extends Component {
 			});
 		});
 
+	}
+
+	componentDidMount() {
+		const self=this;
+	    firebase.auth().onAuthStateChanged(function(user) {
+	      if(user==null) {
+	          window.location = '/';
+	      }
+	    });
 	}
 
 	getPosts() {
@@ -105,14 +143,70 @@ class PostsFeed extends Component {
 
 	}
 
+	onSignOut() {
+		firebase.auth().signOut().then(function() {
+	      console.log('Signed Out');
+	      }, function(error) {
+	      console.error('Sign Out Error', error);
+	    });
+	}
+
+	closeSignOut(e) {
+        e.preventDefault();
+        this.setState({
+            open_signout: false
+        });
+    };
+
+	onConfirmSignOut(e) {
+        e.preventDefault();
+        this.onSignOut();
+    }
+
+    onSignOutClick() {
+    	this.setState({
+    		open_signout: true
+    	})
+    }
+
 	render() {
+		const actions = [
+            <FlatButton
+                    label="Yes"
+                    primary={true}
+                    onClick={this.onConfirmSignOut}
+            />,
+            <FlatButton
+                    label="No"
+                    primary={true}
+                    onClick={this.closeSignOut}
+            />,
+        ];
 		return(
 			<div className="container">
 				<Card className="container card-class-one">
-					<CardHeader
-						title="Posts Feed"
-						avatar={this.state.image}
-					/>
+					<div className="row">
+						<div className="col-sm-4 col-xs-6">
+							<CardHeader
+								title="Posts Feed"
+								avatar={this.state.image}
+							/>
+						</div>
+						<div className="col-sm-8 col-xs-6">
+							<FlatButton label="Sign Out" style={signOutStyle} onClick={this.onSignOutClick.bind(this)} />
+						</div>
+						<Dialog
+	                        actions={actions}
+	                        modal={false}
+	                        open={this.state.open_signout}
+	                        onRequestClose={this.closeSignOut}
+	                        style={signoutMainStyle}
+	                        bodyStyle={signoutStyle}
+	                        actionsContainerStyle={signoutActionStyle}
+	                    >
+                        <strong> Are you sure you want to logout from the page? </strong>
+                    </Dialog>
+					</div>
 					<div className="line" />
 					{this.getPosts()}
 					<div className="container button-div">
@@ -156,7 +250,16 @@ class LikeComments extends Component {
 		}
 	}
 	onPostLike(username) {
-		this.state.arr.push(username);
+		let likes = [];
+		var localLikes = localStorage.getItem('likes');
+		console.log(localLikes);
+		if(localLikes != null) {
+			likes = localLikes.split(",");
+			this.state.arr = likes.concat(username);
+		}
+		else {
+			this.state.arr.push(username);
+		}
 		localStorage.setItem('likes', this.state.arr);
 		this.setState({ hideLike: false, hideLikeButton: true, hideUnlike: false });
 	}
@@ -194,7 +297,7 @@ class LikeComments extends Component {
 		e.preventDefault();
 		var comments = [];
 		// console.log(this.state.textvalue);
-		var a = { username: e.currentTarget.id, comment: this.state.textvalue };
+		var a = { username: e.currentTarget.id, comment: this.state.textvalue, image: this.props.image, myname: this.props.myname };
 		// console.log(a);
 		var localComments = localStorage.getItem('comments');
 		if(localComments!=null) {
@@ -207,7 +310,6 @@ class LikeComments extends Component {
 			mycomments: comments,
 			textvalue: ''
 		});
-		// this.setState({ hideComments: false });
 
 	}
 
@@ -221,8 +323,8 @@ class LikeComments extends Component {
 						<div key={index}>
 							<Card>
 								<CardHeader
-									title={this.props.myname}
-									avatar={this.props.image}
+									title={element.myname}
+									avatar={element.image}
 									subtitle={element.comment}
 									subtitleStyle={{ color: 'black', fontWeight: 'bold'}}
 								/>
@@ -236,7 +338,6 @@ class LikeComments extends Component {
 	}
 
 	render() {
-		// const { fields: { textvalue }, handleSubmit } = this.props;
 		return(
 			<div>
 				<CardActions>
