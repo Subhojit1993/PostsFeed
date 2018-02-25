@@ -99,3 +99,12 @@ button.show-more-button:hover {
 .comment-show {
     display: block;
 }
+
+.email-div {
+    color: teal;
+    font-weight: bold;
+}
+
+.email-text {
+   color: darkolivegreen; 
+}

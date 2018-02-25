@@ -17,7 +17,8 @@ class UserDetails extends Component {
 			profileimage: '',
 			brand: '',
 			image:'',
-			description: ''
+			description: '',
+			email: ''
 		};
 		// this.getDetails = this.getDetails.bind(this);
 	}
@@ -35,7 +36,8 @@ class UserDetails extends Component {
 			description: element.description,
 			brand: element.brand,
 			image: element.image,
-			description: element.description
+			description: element.description,
+			email: element.email
 		});
 	}
 
@@ -50,8 +52,9 @@ class UserDetails extends Component {
 						subtitle={this.state.description}
 						subtitleStyle={{ color: 'darkred', fontWeight: 'bold'}}
 					/>
+					<div className="email-div"> <strong className="email-text">Email id:</strong> &nbsp; {this.state.email} </div>
 					<CardMedia
-						overlay={<CardTitle title={this.state.brand} />}
+						overlay={<CardTitle title={this.state.brand} subtitle="Brand" />}
 					>
 						<img src={this.state.image} className="details-brand-image" alt="" />
 					</CardMedia>

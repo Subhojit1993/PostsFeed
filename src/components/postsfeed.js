@@ -109,10 +109,12 @@ class PostsFeed extends Component {
 							  avatar={element.profile_image}
 							  subtitle={element.description}
 							  subtitleStyle={{ color: 'darkred', fontWeight: 'bold'}}
+							  titleStyle={{fontSize:'14px', fontWeight:'bold'}}
 							/>
+							<CardTitle title="Email:" subtitle={element.email} subtitleStyle={{ color: 'teal', fontWeight: 'bold'}} />
 						</Link>
 						<CardMedia
-						  overlay={<CardTitle title={element.brand} />}
+						  overlay={<CardTitle title={element.brand} subtitle="Brand" />}
 						>
 						  <img src={element.image} className="brand-image" alt="" />
 						</CardMedia>
