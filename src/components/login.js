@@ -3,12 +3,12 @@ import * as firebase from 'firebase';
 
 class Login extends Component {
 
-	static contextTypes = {
-		router: PropTypes.object
-	}
-
 	constructor(props) {
 		super(props);
+	}
+
+	static contextTypes = {
+		router: PropTypes.object
 	}
 
 	handleClick() {
