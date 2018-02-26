@@ -42,9 +42,7 @@ class PostsFeed extends Component {
 			response: [],
 			end_index: 10,
 			hide_button: false,
-			arr: [],
 			hideLike: false,
-			localLikes: [],
 			open_signout: false
 		};
 		this.getPosts = this.getPosts.bind(this);
@@ -55,13 +53,12 @@ class PostsFeed extends Component {
 
 	componentWillMount() {
 		var localLikes = localStorage.getItem('likes');
-		this.setState({ localLikes: localLikes });
 
 		const self=this;
 	    firebase.auth().onAuthStateChanged(function(user) {
 	      if (user!=null) {
 
-	        /* fetching the image from Google profile */
+	        /* fetching the image & name from Google profile */
 	  
 	        self.setState({
 	        	image: user.photoURL,
@@ -207,7 +204,6 @@ class LikeComments extends Component {
 		super(props);
 		this.state = { 
 			hideLike: true,
-			arr: [],
 			hideLikeButton: false,
 			hideUnlike: true,
 			hideText: true,
@@ -224,10 +220,10 @@ class LikeComments extends Component {
 		var localLikes = localStorage.getItem('likes');
 
 		if( localLikes!=null ) {
-			this.state.arr = localLikes.split(",");
+			likes = localLikes.split(",");
 			
-			for(var i=0; i<this.state.arr.length; i++) {
-				if( this.props.id == this.state.arr[i] ) {
+			for(var i=0; i<likes.length; i++) {
+				if( this.props.id == likes[i] ) {
 					this.setState({ hideLike: false, hideLikeButton: true, hideUnlike: false });
 				}
 			}
@@ -236,15 +232,15 @@ class LikeComments extends Component {
 	onPostLike(username) {
 		let likes = [];
 		var localLikes = localStorage.getItem('likes');
-		console.log(localLikes);
+		// console.log(localLikes);
 		if(localLikes != null) {
 			likes = localLikes.split(",");
-			this.state.arr = likes.concat(username);
+			likes = likes.concat(username);
 		}
 		else {
-			this.state.arr.push(username);
+			likes.push(username);
 		}
-		localStorage.setItem('likes', this.state.arr);
+		localStorage.setItem('likes', likes);
 		this.setState({ hideLike: false, hideLikeButton: true, hideUnlike: false });
 	}
 	onPostUnlike(username) {
