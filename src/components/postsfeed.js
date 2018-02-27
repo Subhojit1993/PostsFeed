@@ -64,17 +64,17 @@ class PostsFeed extends Component {
 	        	image: user.photoURL,
 	        	myname: user.displayName
 	        });
+
+	        axios.get(url).then(function(response){
+				self.setState({
+					response: response
+				});
+			});
 	      } 
-	      if(user==null) {
-	          window.location = '/';
+	      else {
+	          window.location = '/login';
 	      }
 	    });
-
-	    axios.get(url).then(function(response){
-			self.setState({
-				response: response
-			});
-		});
 	}
 
 	getPosts() {
