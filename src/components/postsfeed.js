@@ -46,7 +46,6 @@ class PostsFeed extends Component {
 			open_signout: false
 		};
 		this.getPosts = this.getPosts.bind(this);
-		this.onSignOut = this.onSignOut.bind(this);
 		this.onConfirmSignOut = this.onConfirmSignOut.bind(this);
 		this.closeSignOut = this.closeSignOut.bind(this);
 	}
@@ -124,14 +123,6 @@ class PostsFeed extends Component {
 		}
 	}
 
-	onSignOut() {
-		firebase.auth().signOut().then(function() {
-	      console.log('Signed Out');
-	      }, function(error) {
-	      console.error('Sign Out Error', error);
-	    });
-	}
-
 	closeSignOut(e) {
         e.preventDefault();
         this.setState({
@@ -141,7 +132,12 @@ class PostsFeed extends Component {
 
 	onConfirmSignOut(e) {
         e.preventDefault();
-        this.onSignOut();
+        
+        firebase.auth().signOut().then(function() {
+	      console.log('Signed Out');
+	      }, function(error) {
+	      console.error('Sign Out Error', error);
+	    });
     }
 
     onSignOutClick() {
