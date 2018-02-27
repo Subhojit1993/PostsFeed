@@ -7,7 +7,7 @@ import UserDetails from './components/user_details';
 
 export default (
 	<Route path="/" component={App} >
-		<IndexRoute component={Login} />
+		<Route path="login" component={Login} />
 		<Route path="postsfeed" component={PostsFeed} />
 		<Route path="postsfeed/:username" component={UserDetails} />
 	</Route>
